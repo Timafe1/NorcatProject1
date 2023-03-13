@@ -5,9 +5,9 @@ using UnityEngine;
 public class Enemy2 : MonoBehaviour
 {
     [SerializeField] float health = 10f;
-    [SerializeField] float damage = 2f;
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float detectionRadius = 10f;
+    [SerializeField] float damage = 2f;
     [SerializeField] Transform playerTransform;
 
     Rigidbody rb;
@@ -15,7 +15,6 @@ public class Enemy2 : MonoBehaviour
     Vector3 moveDirection;
     bool canTurn = true;
     bool playerInRange = false;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -86,13 +85,9 @@ public class Enemy2 : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public float GetDamage()
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Player player = collision.gameObject.GetComponent<Player>();
-            player.TakeDamage(damage);
-        }
+        return damage;
     }
 
     private void OnDrawGizmosSelected()

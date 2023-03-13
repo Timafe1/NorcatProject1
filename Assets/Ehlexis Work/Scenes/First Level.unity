@@ -1132,6 +1132,25 @@ MonoBehaviour:
   height: 1
   smoothSpeed: 0.9
   rotationSpeed: 2
+--- !u!1 &1399636968 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8177934550449535347, guid: 1e58dc1aa5379d140b0c59734559cb89, type: 3}
+  m_PrefabInstance: {fileID: 8177934550493176046}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1399636973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399636968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e54d61f4b6fef184897ef9bde37afb98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  maxStamina: 100
 --- !u!1001 &1402221356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1651,6 +1670,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 8177934551412082676, guid: 1e58dc1aa5379d140b0c59734559cb89, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 8177934551412082676, guid: 1e58dc1aa5379d140b0c59734559cb89, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.00001
+      objectReference: {fileID: 0}
     - target: {fileID: 8177934551412082677, guid: 1e58dc1aa5379d140b0c59734559cb89, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -1723,10 +1750,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9532e56426a624459572d8fb4549b66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  health: 10
   moveSpeed: 5
-  timeAheadOfPlayer: 1
-  detectionRadius: 7
+  detectionRadius: 5.18
+  damage: 2
   playerTransform: {fileID: 91888032}
 --- !u!1 &8387819379797810576
 GameObject:
