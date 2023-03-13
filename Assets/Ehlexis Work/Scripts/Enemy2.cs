@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class Enemy2 : MonoBehaviour
 {
-    public static event Action<Enemy2> OnEnemyKilled;
-
-    [SerializeField] float health = 3f;
+    [SerializeField] float health = 10f;
+    [SerializeField] float damage = 2f;
     [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float timeAheadOfPlayer = 1f;
     [SerializeField] float detectionRadius = 10f;
     [SerializeField] Transform playerTransform;
 
@@ -28,14 +25,10 @@ public class Enemy2 : MonoBehaviour
     {
         if (target != null && playerInRange)
         {
-            // Calculate the direction to the predicted position
-            Vector3 predictedPosition = playerTransform.position + (playerTransform.GetComponent<Rigidbody>().velocity * timeAheadOfPlayer);
-            Vector3 direction = predictedPosition - transform.position;
+            // Calculate the direction to the player
+            Vector3 direction = playerTransform.position - transform.position;
 
-            Debug.DrawLine(transform.position, predictedPosition, Color.blue); // Draw a line to the predicted position
-            Debug.DrawRay(playerTransform.position, playerTransform.GetComponent<Rigidbody>().velocity, Color.green); // Draw a ray in the player's velocity direction
-
-            // Set the rotation of the enemy to face the predicted position
+            // Set the rotation of the enemy to face the player
             float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
 
             if (canTurn)
@@ -43,17 +36,8 @@ public class Enemy2 : MonoBehaviour
                 rb.rotation = Quaternion.Euler(0, angle, 0);
             }
 
-            // Calculate the intercept direction
-            Vector3 interceptDirection = direction.normalized;
-
-            Debug.DrawRay(transform.position, interceptDirection, Color.red); // Draw a ray in the intercept direction
-
-            // Limit the turn rate to make the movement smoother
-            float maxTurnRate = 180f; // degrees per second
-            float deltaAngle = Mathf.MoveTowardsAngle(rb.rotation.eulerAngles.y, angle, maxTurnRate * Time.deltaTime);
-            rb.rotation = Quaternion.Euler(0, deltaAngle, 0);
-
-            moveDirection = interceptDirection;
+            // Calculate the move direction
+            Vector3 moveDirection = direction.normalized;
 
             rb.velocity = moveDirection * moveSpeed;
         }
@@ -99,7 +83,15 @@ public class Enemy2 : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
-            OnEnemyKilled?.Invoke(this);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Player player = collision.gameObject.GetComponent<Player>();
+            player.TakeDamage(damage);
         }
     }
 
