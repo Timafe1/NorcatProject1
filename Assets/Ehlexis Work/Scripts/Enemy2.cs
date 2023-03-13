@@ -9,8 +9,7 @@ public class Enemy2 : MonoBehaviour
     [SerializeField] float detectionRadius = 10f;
     [SerializeField] float damage = 2f;
     [SerializeField] Transform playerTransform;
-
-    Rigidbody rb;
+    private Rigidbody rb;
     Transform target;
     Vector3 moveDirection;
     bool canTurn = true;
@@ -50,17 +49,26 @@ public class Enemy2 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            Debug.Log("Enemy2 detected player!");
+
             playerTransform = other.transform;
 
             // Check if the player is in sight using a raycast
             RaycastHit hit;
             if (Physics.Raycast(transform.position + Vector3.up * 0.5f,
                 (other.transform.position + Vector3.up * 0.5f) - (transform.position + Vector3.up * 0.5f),
-                out hit, detectionRadius, ~LayerMask.GetMask("Obstacle", "Ground"))
-                && hit.collider.gameObject.CompareTag("Player"))
+                out hit, detectionRadius, ~LayerMask.GetMask("Obstacle", "Ground")))
             {
-                target = other.transform;
-                playerInRange = true;
+                Debug.DrawRay(transform.position + Vector3.up * 0.5f,
+                    (other.transform.position + Vector3.up * 0.5f) - (transform.position + Vector3.up * 0.5f),
+                    Color.green);
+
+                if (hit.collider.gameObject.CompareTag("Player"))
+                {
+                    Debug.Log("Enemy2 has line of sight to player!");
+                    target = other.transform;
+                    playerInRange = true;
+                }
             }
         }
     }
@@ -69,6 +77,7 @@ public class Enemy2 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            Debug.Log("Enemy2 lost player!");
             target = null;
             playerTransform = null;
             playerInRange = false;
