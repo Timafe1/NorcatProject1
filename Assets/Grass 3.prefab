@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5805360787544452413}
   - component: {fileID: 8449454119616555201}
+  - component: {fileID: 6059798947917465036}
   m_Layer: 0
   m_Name: Cone
   m_TagString: Untagged
